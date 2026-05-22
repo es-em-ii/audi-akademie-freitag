@@ -35,6 +35,9 @@ class Bus : public Fahrzeug {
             Fahrer* fahrer;
 
         public:
+            Bus(string plate, string vin, int nr, string start, string stop, int passengers, Fahrer* driver)
+            : Fahrzeug(plate, vin), busNr(nr), start(start), ziel(stop), fahrgaeste(0), fahrer(f) {};
+
             halten() {
                 std::cout << "Der Bus hält an der nächsten Haltestelle./n"
             };
@@ -116,8 +119,12 @@ class Person {
         std::string geburtsdatum;
     
     public:
-        anzeigen(){
 
+        Person (string name, string dob) : name(name), geburtsdatum(dob) {};
+
+        void anzeigen(){
+            std::cout << "Name: " << name << std::endl;
+            std::cout << "Geburtsdatum: " << geburtsdatum << std::endl;
         };
 };
 
@@ -125,4 +132,12 @@ class Person {
 class Fahrer : public Person {
     private:
         int fuehrerscheinNr;
+    
+    public:
+        Fahrer (string name, string dob, int licenseNr) : Person(string name, string dob), fuehrerscheinNr(int licenseNr)
+
+        fahrerInfo(){
+            anzeigen();
+            cout << "Fuehrerscheinnummer: " << fuehrerscheinNr << endl;
+        };
 };
