@@ -157,6 +157,10 @@ int main() {
         0, 
         &fahrer01
     );
-
+    bus01.busInfo();
+    bus01.einsteigen(5);
+    bus01.aussteigen(2);
+    bus01.busInfo();
+    
     return 0;
 };
