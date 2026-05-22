@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <algorithm>
 
 // --- PARENT Fahrzeug ---
 class Fahrzeug{
@@ -29,6 +30,7 @@ class Bus : public Fahrzeug {
             std::string start;
             std::string ziel;
             int fahrgaeste;
+            int rest;
 
             Fahrer* fahrer;
 
@@ -38,24 +40,56 @@ class Bus : public Fahrzeug {
             };
 
             einsteigen(int anzahl) {
-                if (anzahl = 0) {
+                if (fahrgaeste == sitzplaetze) {
+                    std::cout << "Der Bus ist voll./n"
+                }
+                else if (anzahl = 0) {
                     std::cout << "Es ist kein Fahrgast eingestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
-                else if (anzahl = 1) {
-                    fahrgaeste += anzahl;
-                    std::cout << "Es ist " << anzahl << " Fahrgast eingestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
                 }
-                else if (anzahl > 1) {
-                    fahrgaeste += anzahl;
-                    std::cout << "Es sind " << anzahl << " Fahrgäste eingestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
-                }
-                else if (anzahl < 0) {
-                    std::cerr << "Falsche Eingabe. Es sind nur positive Zahlen erlaubt./n"
+                else {
+                    if (anzahl = 1) {
+                        fahrgaeste += anzahl;
+                        std::cout << "Es ist " << anzahl << " Fahrgast eingestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
+                    }
+                    else if (anzahl > 1 && (anzahl + fahrgaeste <= sitzplaetze)) {
+                        fahrgaeste += anzahl;
+                        std::cout << "Es sind " << anzahl << " Fahrgäste eingestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
+                    }
+                    else if (anzahl > 1 && (anzahl + fahrgaeste > sitzplaetze)) {
+                        fahrgaeste += std::max(sitzplaetze, fahrgaeste);
+                        rest = -1*(sitzplaetze - fahrgaeste - anzahl) 
+                        std::cout << "Es sind " << anzahl << " Fahrgäste eingestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << ". Es konnten " rest << " Personen nicht mitgenommen werden."<< std::endl;
+                    }
+                    else if (anzahl < 0) {
+                        std::cerr << "Falsche Eingabe. Es sind nur positive Zahlen erlaubt./n"
+                    };
                 };
             };
 
             aussteigen(int anzahl) {
-                fahrgaeste -= anzahl;
-                std::cout << "Es sind " << anzahl << " Fahrgäste eingestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
+                if (fahrgaeste == 0) {
+                    std::cout << "Der Bus ist leer./n"
+                }
+                else if (anzahl = 0) {
+                    std::cout << "Es ist kein Fahrgast ausgestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
+                }
+                else {
+                    if (anzahl = 1) {
+                        fahrgaeste -= anzahl;
+                        std::cout << "Es ist " << anzahl << " Fahrgast ausgestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
+                    }
+                    else if (anzahl > 1 && anzahl <= fahrgaeste) {
+                        fahrgaeste -= anzahl;
+                        std::cout << "Es sind " << anzahl << " Fahrgäste ausgestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
+                    }
+                    else if (anzahl > 1 && anzahl > fahrgaeste) {
+                        fahrgaeste -= min(anzahl, fahrgaeste);
+                        std::cout << "Es sind " << min(anzahl, fahrgaeste) << " Fahrgäste ausgestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
+                    }
+                    else if (anzahl < 0) {
+                        std::cerr << "Falsche Eingabe. Es sind nur positive Zahlen erlaubt./n"
+                    };
+                };
             };
 
             busInfo() {
