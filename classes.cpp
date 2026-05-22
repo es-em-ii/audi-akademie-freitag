@@ -141,3 +141,21 @@ class Fahrer : public Person {
             cout << "Fuehrerscheinnummer: " << fuehrerscheinNr << endl;
         };
 };
+
+int main() {
+    // Fahrer anlegen
+    Fahrer fahrer01 (
+        "Gandalf",
+        "01.01.1910",
+        "1234567890"
+    );
+    Bus bus01 (
+        "B-US 0101", 
+        "WAUZZZ129484901C12887", 
+        710, 
+        "Ingolstadt", 
+        "München", 
+        0, 
+        &fahrer01
+    );
+};
