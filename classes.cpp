@@ -11,18 +11,19 @@ class Fahrzeug{
         int sitzplaetze;
 
     public:
-        Fahrzeug(string plate, string vin, int plaetze) : kennzeichen(plate), fahrgestellNr(vin), sitzplaetze(seats) {};
+        Fahrzeug(std::string plate, std::string vin, int plaetze) : kennzeichen(plate), fahrgestellNr(vin), sitzplaetze(plaetze) {};
 
         void fahren() {
-            std::cout << "Das Fahrzeug fährt./n"
+            std::cout << "Das Fahrzeug fährt.\n";
         };
 
         void bremsen() {
-            std::cout << "Das Fahezug bremst./n"
+            std::cout << "Das Fahrzeug bremst.\n";
         };
 };
 
 // --- CHILD Bus | Fahrzeug --- 
+class Fahrer;
 class Bus : public Fahrzeug {
 
         private:
@@ -35,22 +36,22 @@ class Bus : public Fahrzeug {
             Fahrer* fahrer;
 
         public:
-            Bus(string plate, string vin, int nr, string start, string stop, int passengers, Fahrer* driver)
-            : Fahrzeug(plate, vin), busNr(nr), start(start), ziel(stop), fahrgaeste(0), fahrer(f) {};
+            Bus(std::string plate, std::string vin, int nr, std::string start, std::string stop, int passengers, Fahrer* driver)
+            : Fahrzeug(plate, vin, passengers), busNr(nr), start(start), ziel(stop), fahrgaeste(0), fahrer(driver) {};
 
-            halten() {
-                std::cout << "Der Bus hält an der nächsten Haltestelle./n"
+            void halten() {
+                std::cout << "Der Bus hält an der nächsten Haltestelle./n";
             };
 
-            einsteigen(int anzahl) {
+            void einsteigen(int anzahl) {
                 if (fahrgaeste == sitzplaetze) {
-                    std::cout << "Der Bus ist voll./n"
+                    std::cout << "Der Bus ist voll./n";
                 }
-                else if (anzahl = 0) {
+                else if (anzahl == 0) {
                     std::cout << "Es ist kein Fahrgast eingestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
                 }
                 else {
-                    if (anzahl = 1) {
+                    if (anzahl == 1) {
                         fahrgaeste += anzahl;
                         std::cout << "Es ist " << anzahl << " Fahrgast eingestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
                     }
@@ -60,24 +61,24 @@ class Bus : public Fahrzeug {
                     }
                     else if (anzahl > 1 && (anzahl + fahrgaeste > sitzplaetze)) {
                         fahrgaeste += std::max(sitzplaetze, fahrgaeste);
-                        rest = -1*(sitzplaetze - fahrgaeste - anzahl) 
-                        std::cout << "Es sind " << anzahl << " Fahrgäste eingestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << ". Es konnten " rest << " Personen nicht mitgenommen werden."<< std::endl;
+                        rest = -1*(sitzplaetze - fahrgaeste - anzahl);
+                        std::cout << "Es sind " << anzahl << " Fahrgäste eingestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << ". Es konnten " << rest << " Personen nicht mitgenommen werden."<< std::endl;
                     }
                     else if (anzahl < 0) {
-                        std::cerr << "Falsche Eingabe. Es sind nur positive Zahlen erlaubt./n"
+                        std::cerr << "Falsche Eingabe. Es sind nur positive Zahlen erlaubt./n";
                     };
                 };
             };
 
-            aussteigen(int anzahl) {
+            void aussteigen(int anzahl) {
                 if (fahrgaeste == 0) {
-                    std::cout << "Der Bus ist leer./n"
+                    std::cout << "Der Bus ist leer./n";
                 }
-                else if (anzahl = 0) {
+                else if (anzahl == 0) {
                     std::cout << "Es ist kein Fahrgast ausgestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
                 }
                 else {
-                    if (anzahl = 1) {
+                    if (anzahl == 1) {
                         fahrgaeste -= anzahl;
                         std::cout << "Es ist " << anzahl << " Fahrgast ausgestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
                     }
@@ -86,17 +87,17 @@ class Bus : public Fahrzeug {
                         std::cout << "Es sind " << anzahl << " Fahrgäste ausgestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
                     }
                     else if (anzahl > 1 && anzahl > fahrgaeste) {
-                        fahrgaeste -= min(anzahl, fahrgaeste);
-                        std::cout << "Es sind " << min(anzahl, fahrgaeste) << " Fahrgäste ausgestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
+                        fahrgaeste -= std::min(anzahl, fahrgaeste);
+                        std::cout << "Es sind " << std::min(anzahl, fahrgaeste) << " Fahrgäste ausgestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
                     }
                     else if (anzahl < 0) {
-                        std::cerr << "Falsche Eingabe. Es sind nur positive Zahlen erlaubt./n"
+                        std::cerr << "Falsche Eingabe. Es sind nur positive Zahlen erlaubt./n";
                     };
                 };
             };
 
-            busInfo() {
-                std::endl;
+            void busInfo() {
+                std::cout << std::endl;
                 std::cout << "| Informationen zum Bus |/n";
                 std::cout << "Busnummer: " << busNr << std::endl;
                 std::cout << "Kennzeichen: " << kennzeichen << std::endl;
@@ -105,9 +106,9 @@ class Bus : public Fahrzeug {
                 std::cout << "Ziel: " << ziel << std::endl;
                 std::cout << "Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
                 std::cout << "Anzahl Sitzplätze: " << sitzplaetze << std::endl;
-                std::cout << "/n"
-                std::cout << "| Informationen zum Fahrer |/n"
-                // Infos zum Fahrer
+                std::cout << "/n";
+                std::cout << "| Informationen zum Fahrer |/n";
+                fahrer->fahrerInfo();
             };
 };
 
@@ -120,7 +121,7 @@ class Person {
     
     public:
 
-        Person (string name, string dob) : name(name), geburtsdatum(dob) {};
+        Person (std::string n, std::string dob) : name(n), geburtsdatum(dob) {};
 
         void anzeigen(){
             std::cout << "Name: " << name << std::endl;
@@ -134,20 +135,20 @@ class Fahrer : public Person {
         int fuehrerscheinNr;
     
     public:
-        Fahrer (string name, string dob, int licenseNr) : Person(string name, string dob), fuehrerscheinNr(int licenseNr)
+        Fahrer (std::string name, std::string dob, int licenseNr) : Person(name, dob), fuehrerscheinNr(licenseNr){};
 
-        fahrerInfo(){
+        void fahrerInfo(){
             anzeigen();
-            cout << "Fuehrerscheinnummer: " << fuehrerscheinNr << endl;
+            std::cout << "Fuehrerscheinnummer: " << fuehrerscheinNr << std::endl;
         };
 };
 
 int main() {
     // Fahrer anlegen
     Fahrer fahrer01 (
-        "Gandalf",
+        "Will Riker",
         "01.01.1910",
-        "1234567890"
+        1234567890
     );
     Bus bus01 (
         "B-US 0101", 
@@ -158,4 +159,6 @@ int main() {
         0, 
         &fahrer01
     );
+
+    return 0;
 };
