@@ -61,6 +61,7 @@ class Bus : public Fahrzeug {
             std::string ziel;
             int fahrgaeste;
             int rest;
+            int diff;
 
             Fahrer* fahrer;
 
@@ -84,14 +85,15 @@ class Bus : public Fahrzeug {
                         fahrgaeste += anzahl;
                         std::cout << "Es ist " << anzahl << " Fahrgast eingestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
                     }
-                    else if (anzahl > 1 && (anzahl + fahrgaeste <= sitzplaetze)) {
+                    else if (anzahl > 1 && (anzahl + fahrgaeste) <= sitzplaetze) {
                         fahrgaeste += anzahl;
                         std::cout << "Es sind " << anzahl << " Fahrgäste eingestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
                     }
-                    else if (anzahl > 1 && (anzahl + fahrgaeste > sitzplaetze)) {
+                    else if (anzahl > 1 && (anzahl + fahrgaeste) > sitzplaetze) {
+                        diff = anzahl - fahrgaeste - sitzplaetze;
                         fahrgaeste += std::max(sitzplaetze, fahrgaeste);
                         rest = -1*(sitzplaetze - fahrgaeste - anzahl);
-                        std::cout << "Es sind " << anzahl << " Fahrgäste eingestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << ". Es konnten " << rest << " Personen nicht mitgenommen werden."<< std::endl;
+                        std::cout << "Es sind " << (fahrgaeste - diff) << " Fahrgäste eingestiegen. Aktuelle Anzahl Fahrgäste: " << fahrgaeste << ". Es konnten " << diff << " Personen nicht mitgenommen werden."<< std::endl;
                     }
                     else if (anzahl < 0) {
                         std::cerr << "Falsche Eingabe. Es sind nur positive Zahlen erlaubt.\n";
@@ -154,12 +156,12 @@ int main() {
         710, 
         "Ingolstadt", 
         "München", 
-        0, 
+        50, 
         &fahrer01
     );
     bus01.busInfo();
-    bus01.einsteigen(5);
-    bus01.aussteigen(2);
+    bus01.einsteigen(55);
+    bus01.aussteigen(255);
     bus01.busInfo();
     
     return 0;
