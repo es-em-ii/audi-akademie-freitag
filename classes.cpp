@@ -102,17 +102,27 @@ class Bus : public Fahrzeug {
                 std::cout << "Ziel: " << ziel << std::endl;
                 std::cout << "Aktuelle Anzahl Fahrgäste: " << fahrgaeste << std::endl;
                 std::cout << "Anzahl Sitzplätze: " << sitzplaetze << std::endl;
-
+                std::cout << "/n"
+                std::cout << "| Informationen zum Fahrer |/n"
+                // Infos zum Fahrer
             };
 };
 
 
 // --- PARENT Person ---
 class Person {
+    protected:
+        std::string name;
+        std::string geburtsdatum;
+    
+    public:
+        anzeigen(){
 
+        };
 };
 
 // --- CHILD Fahrer | Person ---
 class Fahrer : public Person {
-
+    private:
+        int fuehrerscheinNr;
 };
